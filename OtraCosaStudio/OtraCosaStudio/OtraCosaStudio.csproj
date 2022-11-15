@@ -160,6 +160,8 @@
     <None Include="packages.config" />
     <Content Include="Views\Main\Presentation.cshtml" />
     <Content Include="Views\Shared\_LayoutPresentation.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
