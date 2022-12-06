@@ -10,6 +10,7 @@ namespace OtraCosaStudio.Services.Interfaces
     public abstract partial class UserSvc : ServiceProvider
     {
         public abstract List<User> ToListUser();
+        public abstract int RegisterUser(User objUser);
     }
 
 }

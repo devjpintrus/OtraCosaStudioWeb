@@ -1,0 +1,184 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Usuarios</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <div class="col-md-12">
+            <button id="buttonAddUser" onclick="OnShowModalAddUser()" title="Agregar Usuario" class="btn btn-primary ">
+                <span class="icon-left"><i class="fas fa-plus"></i></span> Agregar Usuario
+            </button>
+        </div>
+        <div id="jsGrid"></div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+
+<div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-window-close"></i></button>
+                <h4 class="modal-title" id="registerUserModalTitle"></h4>
+            </div>
+            <div class="container"></div>
+            <div class="modal-body">
+                <div class="container-fluid" style="padding:0;">
+                    <form id='frmUser'>
+                        <div class='form-group'>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='FirstName'>Primer Nombre</label>
+                                    <input type='text' name='FirstName' for='FirstName' class='form-control cl-important focus-input' id='frmUser_FirstName' placeholder='Primer Nombre'>
+                            </div>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='SecondaryName'>Segundo Nombre</label>
+                                    <input type='text' name='SecondaryName' for='SecondaryName' class='form-control cl-important focus-input' id='frmUser_SecondaryName' placeholder='Segundo Nombre'>
+                            </div>
+                        </div> 
+                        <div class='form-group'>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='LastName'>Primer Apellido</label>
+                                    <input type='text' name='LastName' for='LastName' class='form-control cl-important focus-input' id='frmUser_LastName' placeholder='Primer Apellido'>
+                            </div>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='MiddleName'>Segundo Apellido</label>
+                                    <input type='text' name='MiddleName' for='MiddleName' class='form-control cl-important focus-input' id='frmUser_MiddleName' placeholder='SegundoApellido'>
+                            </div>
+                        </div>  
+
+                        <div class='form-group'>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='Email'>Correo</label>
+                                    <input type='text' name='Email' for='Email' class='form-control cl-important focus-input' id='frmUser_Email' placeholder='Correo'>
+                            </div>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='CellPhone'>Celular</label>
+                                    <input type='text' name='CellPhone' for='CellPhone' class='form-control cl-important focus-input' id='frmUser_CellPhone' placeholder='Celular'>
+                            </div>
+                        </div>  
+
+                        <div>
+                            <input id='frmUser_Id' name='Id' for='Id' type='hidden'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class='meeting-modal-footer-update'>
+                    <button id="btnSaveuser" onclick='OnSaveModalAddUser()' title='Guardar' class='btn btn-primary '>
+                        <span class='icon-left'><i class='far fa-save'></i></span> Guardar
+                    </button>
+                    <button onclick='OnCloseModalAddUser()' title='Cerrar ventana' class='btn btn-danger '>
+                        <span class='icon-left'><i class='fas fa-sign-out-alt'></i></span> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<script>
+
+    var PAGE_URL = '@Url.Content("~/User")';
+
+    $(function () {
+
+        LoadUsers();
+
+    });
+
+
+    LoadUsers = function () {
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: PAGE_URL + "/GetListUsers",
+            dataType: "json",
+            success: function (dataObject, textStatus) {
+                if (textStatus == "success") {
+                    if (dataObject != null) {
+                        SetDataUsers(dataObject);
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { },
+            complete: function (data) { }
+        });
+    };
+
+    unformatEdit = function (cellvalue, options) {
+        var editHTML = "<img src='Images/row_edit.gif' alt='Edit' title='Edit' onclick='openEditDialog(" + opts.rowId + ");'>";
+        var deleteHTML = "<img src='Images/row_delete.gif' alt='Delete' title='Delete' onclick='openDeleteDialog(" + opts.rowId + ");'>";;
+        var finalHTML = editHTML + " " + deleteHTML;
+        $(el).html(finalHTML);
+    };
+
+    SetDataUsers = function (arrdata) {
+        console.log(arrdata);
+
+        $("#jsGrid").jsGrid({
+            height: "700",
+            width: "100%",
+
+            sorting: false,
+            paging: false,
+
+            data: arrdata,
+
+            fields: [
+                { name: "FirstName", title: "Primer Nombre", type: "text", width: 100 },
+                { name: "SecondaryName", title: "Segundo Nombre", type: "text", width: 100 },
+                { name: "LastName", title: "Primer Ape.", type: "text", width: 100 },
+                { name: "MiddleName", title: "Segundo Ape.", type: "text", width: 100 },
+                { name: "Email", title: "Correo", type: "text", width: 100 },
+                { name: "CellPhone", title: "Celular", type: "number", width: 100 },
+                { name: "FlagActive", type: "checkbox", title: "¿Está activo?" },
+            ]
+        });
+    };
+
+
+    OnShowModalAddUser = function () {
+        $("#registerUserModal").modal("show");
+    };
+    
+
+    OnCloseModalAddUser = function () {
+        $("#registerUserModal").modal("show");
+    };
+    
+
+    OnSaveModalAddUser = function () {
+        var params = $("#frmUser").extractObject();
+   
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: PAGE_URL + "/SaveUser",
+            dataType: "json",
+            data: JSON.stringify(params),
+            success: function (dataObject, textStatus) {
+                if (textStatus == "success") {
+                    if (dataObject != null) {
+                        LoadUsers();
+                        $("#registerUserModal").modal("hide");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { },
+            complete: function (data) { }
+        });
+
+
+    };
+
+
+
+
+</script>

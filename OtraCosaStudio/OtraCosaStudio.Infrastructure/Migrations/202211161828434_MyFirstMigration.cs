@@ -13,7 +13,7 @@ namespace OtraCosaStudio.Infrastructure.Migrations
                     {
                         UserId = c.Int(nullable: false, identity: true),
                         FirstName = c.String(nullable: false, maxLength: 100, unicode: false),
-                        SecondatyName = c.String(nullable: false, maxLength: 100, unicode: false),
+                        SecondaryName = c.String(nullable: false, maxLength: 100, unicode: false),
                         LastName = c.String(nullable: false, maxLength: 100, unicode: false),
                         MiddleName = c.String(nullable: false, maxLength: 100, unicode: false),
                         Email = c.String(nullable: false, maxLength: 100, unicode: false),

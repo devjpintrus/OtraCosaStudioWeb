@@ -8,15 +8,8 @@ namespace OtraCosaStudio.Util.Errors
 {
    public enum ITSExceptionIds : int
     {
-        ErrorParticipante = 1,
-        ErrorLiga = 2,
-        ErrorBono = 3,
-        ErrorForo = 4,
-        ErrorNotificacion = 5,
-        ErrorCompetencia = 6,
-        ErrorAvatar = 7,
-        ErrorLogin = 8,
-        ErrorPronostico = 9,
+        ErrorSistema = 1, 
+        ErrorLogin = 2, 
     }
 
     [Serializable]

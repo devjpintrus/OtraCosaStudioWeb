@@ -17,7 +17,7 @@ namespace OtraCosaStudio.Model
         [Required]
         [Column(TypeName = "VARCHAR")]
         [MaxLength(100)]
-        public string SecondatyName { get; set; }
+        public string SecondaryName { get; set; }
 
         [Required]
         [Column(TypeName = "VARCHAR")]

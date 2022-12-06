@@ -31,10 +31,39 @@ namespace OtraCosaStudio.Services.Business
             catch (Exception ex)
             {
                 ExceptionManager.Instance.ManageException(ex);
-                throw new ITSException(ITSExceptionIds.ErrorAvatar
-                        , "Error en el metodo: ListarBanner(string pagina)."
+                throw new ITSException(ITSExceptionIds.ErrorSistema
+                        , "Error en el metodo: ToListUser()."
                         , new object[] { null });
             }
         }
+
+
+        public override int RegisterUser(User objUser)
+        {
+            try
+            {
+                using (var ctx = new ControlContext())
+                {
+                    objUser.CreateBy = "admin";
+                    objUser.FlagActive = true;
+                    objUser.CreateDate = DateTime.Now;
+                    ctx.Entry(objUser).State = System.Data.Entity.EntityState.Added;
+                    ctx.Set<User>().Add(objUser);
+
+                    ctx.SaveChanges();
+
+                    return objUser.UserId;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionManager.Instance.ManageException(ex);
+                throw new ITSException(ITSExceptionIds.ErrorSistema
+                        , "Error en el metodo:RegisterUser(User objUser)."
+                        , new object[] { null });
+            }
+        }
+
+
     }
 }

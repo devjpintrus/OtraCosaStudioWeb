@@ -21,6 +21,9 @@ namespace OtraCosaStudio.Infrastructure.Persistence
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>();
+            modelBuilder.Entity<Film>();
+
+
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 

@@ -1,0 +1,35 @@
+
+create database OtraCosaStudio
+
+
+Tablas :
+
+- Usuario (ya esta creado)
+
+- Fotografia 
+
+- Filmaciones 
+
+- DiseñoGrafico 
+
+- Tipo Servicio
+
+
+- Eventos
+(
+  relacion con usuario 
+  tipos de servicio
+)
+
+
+
+*---------------------------------*
+
+add-migration MyFirstMigration
+
+Update-Database
+
+*---------------------------------*
+
+ECU - Visualizar Pagina de Inicio
+

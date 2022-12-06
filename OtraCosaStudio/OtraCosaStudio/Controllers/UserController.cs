@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OtraCosaStudio.Model;
+using OtraCosaStudio.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +15,21 @@ namespace OtraCosaStudio.Controllers
         {
             return View();
         }
+
+
+        public JsonResult GetListUsers()
+        { 
+            var lista = ServiceManager<UserSvc>.Provider.ToListUser();
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult SaveUser(User user)
+        { 
+            var res = ServiceManager<UserSvc>.Provider.RegisterUser(user);
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
