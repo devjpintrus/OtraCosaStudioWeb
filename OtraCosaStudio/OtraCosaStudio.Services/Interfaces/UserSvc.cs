@@ -1,4 +1,5 @@
 ﻿using OtraCosaStudio.Model;
+using OtraCosaStudio.Model.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,11 @@ namespace OtraCosaStudio.Services.Interfaces
 {
     public abstract partial class UserSvc : ServiceProvider
     {
-        public abstract List<User> ToListUser();
+        public abstract List<UserDto> ToListUser();
+        public abstract User FindUserById(int Id);
         public abstract int RegisterUser(User objUser);
+        public abstract int UpdateUser(User objUser);
+        public abstract int DeleteUser(int Id);
     }
 
 }

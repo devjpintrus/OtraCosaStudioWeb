@@ -50,13 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202211161828434_MyFirstMigration.cs" />
-    <Compile Include="Migrations\202211161828434_MyFirstMigration.Designer.cs">
-      <DependentUpon>202211161828434_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202212070621064_firsttime.cs" />
+    <Compile Include="Migrations\202212070621064_firsttime.Designer.cs">
+      <DependentUpon>202212070621064_firsttime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202211161918309_add_film.cs" />
-    <Compile Include="Migrations\202211161918309_add_film.Designer.cs">
-      <DependentUpon>202211161918309_add_film.cs</DependentUpon>
+    <Compile Include="Migrations\202212070623474_demo.cs" />
+    <Compile Include="Migrations\202212070623474_demo.Designer.cs">
+      <DependentUpon>202212070623474_demo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Persistence\ControlContext.cs" />
@@ -76,11 +76,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202211161828434_MyFirstMigration.resx">
-      <DependentUpon>202211161828434_MyFirstMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212070621064_firsttime.resx">
+      <DependentUpon>202212070621064_firsttime.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211161918309_add_film.resx">
-      <DependentUpon>202211161918309_add_film.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212070623474_demo.resx">
+      <DependentUpon>202212070623474_demo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

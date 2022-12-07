@@ -8,9 +8,12 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <div class="col-md-12">
+        <div class=" ">
             <button id="buttonAddUser" onclick="OnShowModalAddUser()" title="Agregar Usuario" class="btn btn-primary ">
-                <span class="icon-left"><i class="fas fa-plus"></i></span> Agregar Usuario
+                <span class="icon-left"><i class="fas fa-plus"></i></span> 
+            </button>
+            <button id="buttonReloadUser" onclick="OnReloadUsers()" title="Recargar Grilla" class="btn btn-primary ">
+                <span class="icon-left"><i class="fas fa-undo"></i></span> 
             </button>
         </div>
         <div id="jsGrid"></div>
@@ -23,8 +26,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-window-close"></i></button>
                 <h4 class="modal-title" id="registerUserModalTitle"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-window-close"></i></button>
             </div>
             <div class="container"></div>
             <div class="modal-body">
@@ -47,14 +50,14 @@
                             </div>
                             <div class='col-md-12'>
                                     <label class='control-label' for='MiddleName'>Segundo Apellido</label>
-                                    <input type='text' name='MiddleName' for='MiddleName' class='form-control cl-important focus-input' id='frmUser_MiddleName' placeholder='SegundoApellido'>
+                                    <input type='text' name='MiddleName' for='MiddleName' class='form-control cl-important focus-input' id='frmUser_MiddleName' placeholder='Segundo Apellido'>
                             </div>
                         </div>  
 
                         <div class='form-group'>
                             <div class='col-md-12'>
                                     <label class='control-label' for='Email'>Correo</label>
-                                    <input type='text' name='Email' for='Email' class='form-control cl-important focus-input' id='frmUser_Email' placeholder='Correo'>
+                                    <input type='Email' name='Email' for='Email' class='form-control cl-important focus-input' id='frmUser_Email' placeholder='Correo'>
                             </div>
                             <div class='col-md-12'>
                                     <label class='control-label' for='CellPhone'>Celular</label>
@@ -62,8 +65,21 @@
                             </div>
                         </div>  
 
+                        <div class='form-group'>
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='DocumentTypeId'>Tipo de Documento</label>
+                                    <select name='DocumentTypeId' for='DocumentTypeId' class='form-control cl-important focus-input' id='frmUser_DocumentTypeId'></select>
+                            </div>  
+                        
+                            <div class='col-md-12'>
+                                    <label class='control-label' for='FlagActive'>Activo</label>
+                                    <input type='checkbox' name='FlagActive' for='FlagActive' class='cl-important focus-input' id='frmUser_FlagActive' />
+                            </div> 
+
+                        </div>  
+
                         <div>
-                            <input id='frmUser_Id' name='Id' for='Id' type='hidden'>
+                            <input id='frmUser_UserId' name='UserId' for='UserId' type='hidden'>
                         </div>
                     </form>
                 </div>
@@ -86,13 +102,39 @@
 <script>
 
     var PAGE_URL = '@Url.Content("~/User")';
+    var PAGE_DOCUMENT_TYPE_URL = '@Url.Content("~/DocumentType")';
 
     $(function () {
 
+        LoadDocumentTypes();
         LoadUsers();
 
     });
 
+
+    LoadDocumentTypes = function () {
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: PAGE_DOCUMENT_TYPE_URL + "/GetListDocumentTypes",
+            dataType: "json",
+            success: function (dataObject, textStatus) {
+                if (textStatus == "success") {
+                    if (dataObject != null) {
+                        SetDataDocumentTypes(dataObject);
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { },
+            complete: function (data) { }
+        });
+    };
+
+    SetDataDocumentTypes = function (data) {
+        $.each(data, function (i, item) {
+            $("#frmUser_DocumentTypeId").append("<option value='" + item.DocumentTypeId + "'>" + item.Name + "</option>");
+        });
+    };
 
     LoadUsers = function () {
         $.ajax({
@@ -111,17 +153,8 @@
             complete: function (data) { }
         });
     };
-
-    unformatEdit = function (cellvalue, options) {
-        var editHTML = "<img src='Images/row_edit.gif' alt='Edit' title='Edit' onclick='openEditDialog(" + opts.rowId + ");'>";
-        var deleteHTML = "<img src='Images/row_delete.gif' alt='Delete' title='Delete' onclick='openDeleteDialog(" + opts.rowId + ");'>";;
-        var finalHTML = editHTML + " " + deleteHTML;
-        $(el).html(finalHTML);
-    };
-
+     
     SetDataUsers = function (arrdata) {
-        console.log(arrdata);
-
         $("#jsGrid").jsGrid({
             height: "700",
             width: "100%",
@@ -137,37 +170,89 @@
                 { name: "LastName", title: "Primer Ape.", type: "text", width: 100 },
                 { name: "MiddleName", title: "Segundo Ape.", type: "text", width: 100 },
                 { name: "Email", title: "Correo", type: "text", width: 100 },
-                { name: "CellPhone", title: "Celular", type: "number", width: 100 },
-                { name: "FlagActive", type: "checkbox", title: "¿Está activo?" },
+                { name: "CellPhone", title: "Celular", type: "number", width: 80 },
+                { name: "FlagActive", type: "checkbox", title: "¿Está activo?", width: 60 },
+                {
+                    itemTemplate: function (v, d) {
+                        return $("<div>").append("<button style='margin: 0 20px;' onclick='OnEditUser(" + d.UserId + ")' class='btn btn-primary'><span class='fa fa-edit'></span></button><button class='btn btn-danger' onclick='OnDeleteUser(" + d.UserId +")'><span class='fa fa-trash'></span></button>");
+                    }
+                },
             ]
         });
     };
 
 
     OnShowModalAddUser = function () {
+        $("#registerUserModalTitle").text("Registro de Usuario");
+
+        $("#frmUser_FirstName").val("");
+        $("#frmUser_SecondaryName").val("");
+        $("#frmUser_LastName").val("");
+        $("#frmUser_MiddleName").val("");
+        $("#frmUser_Email").val("");
+        $("#frmUser_CellPhone").val("");
+        $("#frmUser_UserId").val(""); 
+        $("#frmUser_FlagActive").prop("checked", false); 
+
         $("#registerUserModal").modal("show");
     };
     
 
     OnCloseModalAddUser = function () {
-        $("#registerUserModal").modal("show");
+        $("#registerUserModal").modal("hide");
     };
-    
 
+    OnReloadUsers = function () {
+        LoadUsers();
+    };
+     
     OnSaveModalAddUser = function () {
         var params = $("#frmUser").extractObject();
-   
+        var method = "";
+
+        params.FlagActive = $("#frmUser_FlagActive").prop("checked"); 
+
+        if (params.UserId != "") { 
+            method = "UpdateUser"
+        } else { 
+            method = "SaveUser"
+        }
+
+        if (ValidateDataUser(params)) {
+            $.ajax({
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                url: PAGE_URL + "/" + method,
+                dataType: "json",
+                data: JSON.stringify(params),
+                success: function (dataObject, textStatus) {
+                    if (textStatus == "success") {
+                        if (dataObject != null) {
+                            LoadUsers();
+                            $("#registerUserModal").modal("hide");
+                        }
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) { },
+                complete: function (data) { }
+            });
+        }
+    };
+
+    OnEditUser = function (key) {
+        var params = {};
+        params.Id = key;
+
         $.ajax({
             type: 'POST',
             contentType: "application/json; charset=utf-8",
-            url: PAGE_URL + "/SaveUser",
+            url: PAGE_URL + "/FindUser",
             dataType: "json",
             data: JSON.stringify(params),
             success: function (dataObject, textStatus) {
                 if (textStatus == "success") {
                     if (dataObject != null) {
-                        LoadUsers();
-                        $("#registerUserModal").modal("hide");
+                        SetDataUser(dataObject); 
                     }
                 }
             },
@@ -175,10 +260,90 @@
             complete: function (data) { }
         });
 
-
     };
 
+    SetDataUser = function (d) {
+        OnShowModalAddUser();
 
+        $("#frmUser_FirstName").val(d.FirstName);
+        $("#frmUser_SecondaryName").val(d.SecondaryName);
+        $("#frmUser_LastName").val(d.LastName);
+        $("#frmUser_MiddleName").val(d.MiddleName);
+        $("#frmUser_Email").val(d.Email);
+        $("#frmUser_CellPhone").val(d.CellPhone); 
+        $("#frmUser_UserId").val(d.UserId); 
+        $("#frmUser_DocumentTypeId").val(d.DocumentTypeId); 
+        $("#frmUser_FlagActive").prop("checked", d.FlagActive); 
+
+        $("#registerUserModalTitle").text("Actualizar datos del Usuario");
+    };
+
+    OnDeleteUser = function (key) {
+        ConfirmYesOrNo("¿Está seguro de eliminar el Usuario?", key, DeleteUserById)
+    };
+
+    DeleteUserById = function (key) {
+        var params = {};
+        params.Id = key;
+
+        $.ajax({
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            url: PAGE_URL + "/DeleteUser",
+            dataType: "json",
+            data: JSON.stringify(params),
+            success: function (dataObject, textStatus) {
+                if (textStatus == "success") {
+                    if (dataObject != null) {
+                        LoadUsers();
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) { },
+            complete: function (data) { }
+        });
+    };
+
+    ValidateDataUser = function (d) {
+        var flagValidate = true;
+
+        if (d.FirstName == "" || d.FirstName == null) {
+            ConfirmError("Debe ingresar el Primer nombre");
+            return false;
+        }
+
+        if (d.SecondaryName == "" || d.SecondaryName == null) {
+            ConfirmError("Debe ingresar el Segundo nombre");
+            return false;
+        }
+
+        if (d.LastName == "" || d.LastName == null) {
+            ConfirmError("Debe ingresar el Primer apellido");
+            return false;
+        }
+
+        if (d.MiddleName == "" || d.MiddleName == null) {
+            ConfirmError("Debe ingresar el Segundo apellido");
+            return false;
+        }
+
+        if (d.Email == "" || d.Email == null) {
+            ConfirmError("Debe ingresar el Correo");
+            return false;
+        }
+
+        if (d.CellPhone == "" || d.CellPhone == null) {
+            ConfirmError("Debe ingresar un Número de celular");
+            return false;
+        } else {
+            if (d.CellPhone.trim().length != 9 ) {
+                ConfirmError("Debe ingresar un celular de 9 digitos");
+                return false;
+            }
+        }
+
+        return flagValidate;
+    };
 
 
 </script>

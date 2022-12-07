@@ -7,13 +7,13 @@ namespace OtraCosaStudio.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class add_film : IMigrationMetadata
+    public sealed partial class demo : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(add_film));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(demo));
         
         string IMigrationMetadata.Id
         {
-            get { return "202211161918309_add_film"; }
+            get { return "202212070623474_demo"; }
         }
         
         string IMigrationMetadata.Source

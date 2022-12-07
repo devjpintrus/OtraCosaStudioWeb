@@ -7,13 +7,13 @@ namespace OtraCosaStudio.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class MyFirstMigration : IMigrationMetadata
+    public sealed partial class firsttime : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MyFirstMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(firsttime));
         
         string IMigrationMetadata.Id
         {
-            get { return "202211161828434_MyFirstMigration"; }
+            get { return "202212070621064_firsttime"; }
         }
         
         string IMigrationMetadata.Source

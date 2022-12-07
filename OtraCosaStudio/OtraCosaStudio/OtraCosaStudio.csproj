@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DocumentTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
@@ -223,6 +224,7 @@
     <Content Include="FrontEnd\dist\js\pages\dashboard.js" />
     <Content Include="FrontEnd\dist\js\pages\dashboard2.js" />
     <Content Include="FrontEnd\dist\js\pages\dashboard3.js" />
+    <Content Include="FrontEnd\libs\util.js" />
     <Content Include="FrontEnd\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="FrontEnd\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
     <Content Include="FrontEnd\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
@@ -513,6 +515,8 @@
     <Content Include="FrontEnd\plugins\codemirror\theme\yeti.css" />
     <Content Include="FrontEnd\plugins\codemirror\theme\yonce.css" />
     <Content Include="FrontEnd\plugins\codemirror\theme\zenburn.css" />
+    <Content Include="FrontEnd\plugins\confirm\confirm.min.css" />
+    <Content Include="FrontEnd\plugins\confirm\confirm.min.js" />
     <Content Include="FrontEnd\plugins\datatables-autofill\css\autoFill.bootstrap4.css" />
     <Content Include="FrontEnd\plugins\datatables-autofill\css\autoFill.bootstrap4.min.css" />
     <Content Include="FrontEnd\plugins\datatables-autofill\js\autoFill.bootstrap4.js" />

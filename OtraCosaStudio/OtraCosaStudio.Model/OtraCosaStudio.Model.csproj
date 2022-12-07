@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentType.cs" />
+    <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Film.cs" />
     <Compile Include="ServiceType.cs" />

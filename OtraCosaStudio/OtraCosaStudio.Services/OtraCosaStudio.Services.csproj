@@ -48,9 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\DocumentTypeProvider.cs" />
     <Compile Include="Business\UserProvider.cs" />
     <Compile Include="Interfaces\ServiceManager.cs" />
     <Compile Include="Interfaces\ServiceProvider.cs" />
+    <Compile Include="Interfaces\DocumentTypeSvc.cs" />
     <Compile Include="Interfaces\UserSvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -39,5 +39,11 @@ namespace OtraCosaStudio.Model
         [MaxLength(100)]
         public string CellPhone { get; set; }
 
+        [Required]
+        public int DocumentTypeId { get; set; }
+
+        [ForeignKey("DocumentTypeId")]
+        public DocumentType DocumentType { get; set; }
+
     }
 }

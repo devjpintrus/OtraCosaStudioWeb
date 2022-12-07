@@ -27,7 +27,16 @@
     <link rel="stylesheet" href="~/FrontEnd/plugins/summernote/summernote-bs4.min.css">
     <!-- jsGrid -->
     <link rel="stylesheet" href="~/FrontEnd/plugins/jsgrid/jsgrid.min.css">
+
     <link rel="stylesheet" href="~/FrontEnd/plugins/jsgrid/jsgrid-theme.min.css">
+
+    <link  rel="stylesheet" href="~/FrontEnd/plugins/confirm/confirm.min.css">
+
+    <style>
+        .btn {
+            font-size: 0.70rem;
+        }
+    </style>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -62,9 +71,12 @@
     <!-- AdminLTE App -->
     <script src="~/FrontEnd/dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="~/FrontEnd/dist/js/demo.js"></script>
 
     <script src="~/FrontEnd/plugins/jsgrid/jsgrid.min.js"></script>
+
+    <script src="~/FrontEnd/plugins/confirm/confirm.min.js"></script>
+
+    <script src="~/FrontEnd/libs/util.js"></script>
 
     <div class="wrapper">
 
@@ -303,26 +315,6 @@
 
 
         });
-
-
-        $.fn.extractObject = function () {
-            var accum = {};
-            function add(accum, namev, value) {
-                if (namev.length == 1)
-                    accum[namev[0]] = value;
-                else {
-                    if (accum[namev[0]] == null)
-                        accum[namev[0]] = {};
-                    add(accum[namev[0]], namev.slice(1), value);
-                }
-            };
-            this.find('input, textarea, select').each(function () {
-                if (typeof $(this).attr('name') !== "undefined") {
-                    add(accum, $(this).attr('name').split('.'), $(this).val());
-                }
-            });
-            return accum;
-        };
 
     </script>
 
